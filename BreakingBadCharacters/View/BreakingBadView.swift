@@ -60,7 +60,7 @@ struct BreakingBadCharacter: View{
     var body: some View{
         VStack{
             HStack{
-                Text(character.name ?? "Unnamed").font(.system(size: 40))
+                Text(character.name ?? "Unnamed").font(.system(size: 40)).minimumScaleFactor(0.1).lineLimit(1)
                     .padding()
                 
                 CustomImageView(urlString: character.img)
