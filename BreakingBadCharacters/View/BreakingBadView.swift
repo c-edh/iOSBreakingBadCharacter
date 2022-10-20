@@ -10,6 +10,7 @@ import SwiftUI
 struct BreakingBadView: View {
     @StateObject var viewModel = BreakingBadViewModel()
     
+    
     @State private var searchText = ""
     @State private var pickSeason = "All Seasons"
     
@@ -63,13 +64,26 @@ struct BreakingBadCharacter: View{
                 Text(character.name ?? "Unnamed").font(.system(size: 40)).minimumScaleFactor(0.1).lineLimit(1)
                     .padding()
                 
-                CustomImageView(urlString: character.img)
-                    .cornerRadius(10)
-                    .frame(width: UIScreen.main.bounds.height * 0.2 , height: UIScreen.main.bounds.height * 0.2)
-                
-                    .shadow(radius: 20).padding(.bottom,20)
-                
-            }
+                AsyncImage(url:URL(string: character.img!)){ phase in
+                    switch phase{
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image.resizable()
+                            .scaledToFit()
+                            .cornerRadius(10)
+                            .shadow(radius: 20)
+                            
+                        
+                    case .failure(_):
+                        Image(systemName: "person.crop.square")                    .frame(width:80, height:80)
+                        
+                    @unknown default:
+                        Image(systemName: "person.crop.square")                    .frame(width:80, height:80)
+                        
+                    }
+                }.padding()
+            }.frame(height: 200)
             
             List{
                 VStack(alignment: .leading) {
@@ -137,9 +151,28 @@ struct CharacterCellView: View {
     var body: some View {
         HStack{
             
-            CustomImageView(urlString: character.img)
-                .cornerRadius(10)
-                .frame(width:80,height: 80)
+            AsyncImage(url:URL(string: character.img!)){ phase in
+                switch phase{
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image.resizable()
+                    .scaledToFit()
+                  //  .aspectRatio(contentMode: .fit)
+                    .cornerRadius(10)
+                    .frame(width:80, height:80)
+                    
+                case .failure(_):
+                    Image(systemName: "person.crop.square")                    .frame(width:80, height:80)
+
+                @unknown default:
+                    Image(systemName: "person.crop.square")                    .frame(width:80, height:80)
+
+                }
+                
+                
+            }
+
             
             Spacer()
             Text(character.name ?? "Unnamed")
