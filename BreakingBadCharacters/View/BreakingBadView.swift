@@ -11,7 +11,7 @@ struct BreakingBadView: View {
     @StateObject var viewModel = BreakingBadViewModel()
     
     @State private var searchText = ""
-    @State private var pickSeason = "All Season"
+    @State private var pickSeason = "All Seasons"
     
     
     var body: some View {
