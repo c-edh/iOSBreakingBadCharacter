@@ -1,6 +1,7 @@
 #Breaking Bad Characters
  
-Developer: ** Corey Edh **
+Developer: 
+**Corey Edh**
 
 Xcode: 14.0.1
 
